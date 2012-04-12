@@ -1,0 +1,16 @@
+*.jar	
+*.class
+
+*#
+*~
+
+*.tar
+*.rar
+
+*.pdf
+*.html
+
+target
+site
+unstage
+test

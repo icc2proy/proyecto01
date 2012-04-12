@@ -1,0 +1,25 @@
+Desarrollo de un programa interactivo que mantenga un inventario de una tienda de pelıculas.
+
+Almacena la siguiente informacion:
+-Titulo de pelicula
+-Precio por ejemplar
+-Numero de ejemplares disponibles
+-Numero de ejemplares que deberia haber
+-Lista de personas que esperan por ese titulo si no hubiera en existencia 
+
+++Operaciones generales sobre el inventario y poder guardar y leer los datos de la ejecucion de un archivo.
+++Almacenamiento y recuperacion de informacion usando objetos Serializable por especificacion. Se debe incluir un archivo .ser con 20 titulos iniciales.
+++Cada integrante debe enviar un archivo README.pdf en donde se indique el nombre de integrantes y se explique el diseño del programa.
+
+NOTA: Por especificacion se reponen los ejemplares diariamente.
+
+Debe contar con un menu de opciones:
+--C -Despliega la informacion del titulo en pantalla.
+--V -Realiza la venta de un titulo. 
+      --Debe solicitar nombre del cliente y verificar existencia de ejemplares.
+
+      ----Revisar el proceso en la especificacion del proyecto---
+
+--A -Agrega un titulo nuevo al inventario con toda la informacion necesaria.
+--P -Modifica el precio de venta de un titulo.
+--S -Almacena la informacion en un archivo y sale del programa.

@@ -41,7 +41,7 @@ public class App {
         // Comentar esto para bloquear el menu.
         while (opcion != -1) {
             try {
-                opción = elMenu.muestraMenu(entrada, elCatalogo);
+                opcion = elMenu.muestraMenu(entrada, elCatalogo);
             } catch (IOException e) {
                 System.out.println("Opción mal elegida, volver a intentarlo");
                 opcion = 0;

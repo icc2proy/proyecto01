@@ -28,8 +28,8 @@ public class MenuProg {
      * listaclientes contendra a todos los clientes.
      * listapeliculas contendra a todas las peliculas.
      */
-    private ListaLigada listaclientes = new ListaLigada();
-    private ListaLigada listapeliculas = new ListaLigada();
+    private ListaLigadaDoble listaclientes = new ListaLigadaDoble();
+    private ListaLigadaDoble listapeliculas = new ListaLigadaDoble();
 
      /**
      * El metodo <code>muestraMenu</code> nos despliega un menú de opciones

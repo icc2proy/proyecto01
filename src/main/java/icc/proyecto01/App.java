@@ -25,7 +25,7 @@ public class App {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
         //        Catalogo elCatalogo = new Catalogo();
-        MenuProg elMenu = new MenuProg();
+        //        MenuProg elMenu = new MenuProg();
 
         // Elementos de prueba.
         Pelicula peli = new Pelicula();

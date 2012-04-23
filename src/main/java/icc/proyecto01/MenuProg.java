@@ -2,6 +2,9 @@ package icc.proyecto01;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.Serializable;
 
 /**
  * Clase <code>MenuProg</code> nos muestra un menu
@@ -9,7 +12,7 @@ import java.io.IOException;
  *
  * @version 1.0
  */
-public class MenuProg {
+public class MenuProg implements Serializable {
 
     /**
      * Enteros usados para la seleccion de menu.
@@ -27,7 +30,6 @@ public class MenuProg {
      * listapeliculas contendra a todas las peliculas.
      */
     private ListaLigadaDoble listaclientes = new ListaLigadaDoble();
-    private ListaLigadaDoble listapeliculas = new ListaLigadaDoble();
 
     private Inventario elInventario = new Inventario();
 
@@ -54,7 +56,7 @@ public class MenuProg {
             + "----------------------";
         System.out.println(menu);
         String sopcion = "";
-        System.out.print("Elige un numero para realizar "
+        System.out.print("Elige una letra para realizar "
                            + "la operación -> ");
         try {
             sopcion = entrada.readLine();  // Se recibe la entrada del teclado y se almacena en sopción.
@@ -64,6 +66,7 @@ public class MenuProg {
         int opcion = "SACVP".indexOf(sopcion);  // Se procesa sopción y se obtiene la opción elegida.
         switch (opcion) {
         case SALIR:  // Salida del programa.
+            guarda(elInventario);
             System.out.println("Gracias por usar el sistema.\n"
                                + "Vuelva pronto.\n");
             return -1;
@@ -84,9 +87,9 @@ public class MenuProg {
                 System.out.println("Favor de agregar el numero de ejemplares en existencia: ");
                 int ejemplares = Integer.parseInt(entrada.readLine());
 
-		// Creamos la pelicula y la agregamos al inventario.
-		Pelicula nuevapelicula = new Pelicula(nombrepelicula, precio, ejemplares);
-                listapeliculas.add(listapeliculas.size(), nuevapelicula);
+                // Creamos la pelicula y la agregamos al inventario.
+                Pelicula nuevapelicula = new Pelicula(nombrepelicula, precio, ejemplares);
+                elInventario.agregaPelicula(nuevapelicula);
                 System.out.println("Pelicula dado de alta exitosamente. \n");
             }
             return AGREGAPELICULA;
@@ -96,7 +99,7 @@ public class MenuProg {
             nombrepelicula = entrada.readLine();  // Se declaro al principio para uso general.
             int laPeliculaExiste = elInventario.busquedaTitulo(nombrepelicula);
             if (laPeliculaExiste > -1) {  // Es -1 solo se recibe si no se encuentra en las listas.
-                Pelicula consulta = (Pelicula) listapeliculas.get(laPeliculaExiste);
+                Pelicula consulta = elInventario.getPelicula(laPeliculaExiste);
                 System.out.println("Titulo: " + consulta.getTitulo());
                 System.out.println("Precio: " + consulta.getPrecio());
                 System.out.println("Existencia: " + consulta.getNumRestantes());
@@ -113,6 +116,7 @@ public class MenuProg {
             System.out.print("Nombre de la pelicula: ");
             nombrepelicula = entrada.readLine();
 
+
             return VENTA;
         case PRECIO:  // Se actualiza el precio de una pelicula.
             System.out.println("Para cambiar el precio de una pelicula "
@@ -124,7 +128,7 @@ public class MenuProg {
 
             int unapelicula = elInventario.busquedaTitulo(nombrepelicula);
             if (unapelicula > -1) {
-                Pelicula lapelicula = (Pelicula) listapeliculas.get(unapelicula);
+                Pelicula lapelicula = elInventario.getPelicula(unapelicula);
                 System.out.println("El precio actual es: " + lapelicula.getPrecio());
                 System.out.println("Esta seguro que desea cambiar el precio de la pelicula: Y/N ");
                 String resp = entrada.readLine();
@@ -143,4 +147,23 @@ public class MenuProg {
             return MENU;
         }
     }
+
+    /**
+     * Metodo que guarda el inventario en el archivo inventario.ser
+     * Esto se hace al cerrar la tienda.
+     * @param obje el inventario que queremos guardar.
+     */
+    protected final void guarda(final Inventario obje) {
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream("inventario.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(obje);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
 }

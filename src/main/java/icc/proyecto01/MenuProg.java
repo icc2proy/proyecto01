@@ -90,8 +90,6 @@ public class MenuProg implements Serializable {
                 // Creamos la pelicula y la agregamos al inventario.
                 Pelicula nuevapelicula = new Pelicula(nombrepelicula.toUpperCase(), precio, ejemplares);
                 elInventario.agregaPelicula(nuevapelicula);
-                System.out.println("el inventario: "); // BORRAME
-                elInventario.muestraInventario(); //BORRAME
                 System.out.println("Pelicula dada de alta exitosamente. \n");
             }
             return AGREGAPELICULA;

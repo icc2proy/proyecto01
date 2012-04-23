@@ -82,7 +82,7 @@ public class Inventario implements Serializable {
 
         int pos = -1;
         if (!inventario.isEmpty()) {
-            for (int esta = 1; esta < inventario.size(); esta++) {
+            for (int esta = 1; esta <= inventario.size(); esta++) {
                 Pelicula unaPelicula = (Pelicula) inventario.get(esta);
                 String nombre = unaPelicula.getTitulo();
                 if (titulopelicula.equalsIgnoreCase(nombre)) {

@@ -1,10 +1,12 @@
 package icc.proyecto01;
 
+import java.io.Serializable;
+
 /**
  * Clase que modela una pelicula, que contiene titulo,
  * precio y numero de ejemplares.
  */
-public class Pelicula {
+public class Pelicula implements Serializable {
 
     private String titulo; //el titulo de la pelicula.
     private int precio; // el precio de la pelicula.
@@ -27,6 +29,7 @@ public class Pelicula {
         titulo = mtitulo;
         precio = mprecio;
         num_ejemplares = mejemplares;
+        num_restantes = mejemplares;
     }
 
     /**

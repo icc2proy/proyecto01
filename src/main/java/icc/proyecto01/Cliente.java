@@ -1,10 +1,10 @@
 package icc.proyecto01;
 
+import java.io.Serializable;
 /**
  * Clase que modela un Cliente, que contien nombre y telefono.
  */
-public class Cliente {
-
+public class Cliente implements Serializable {
     private String nombre; // Nombre del cliente
     private int telefono; // Telefono del cliente
     private boolean esperando = false; // variable para saber si esta en espera o no.

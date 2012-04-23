@@ -72,7 +72,7 @@ public class MenuProg implements Serializable {
             return -1;
         case AGREGAPELICULA:  // Introduce una nueva pelicula al sistema.
             System.out.println("Para dar de alta una nueva pelicula "
-                               + "favor de ingresar nombre: \n");
+                               + "favor de ingresar nombre: ");
             nombrepelicula = entrada.readLine();  // Se declaro al principio para uso general.
 
             int elTituloExiste = elInventario.busquedaTitulo(nombrepelicula);
@@ -88,14 +88,16 @@ public class MenuProg implements Serializable {
                 int ejemplares = Integer.parseInt(entrada.readLine());
 
                 // Creamos la pelicula y la agregamos al inventario.
-                Pelicula nuevapelicula = new Pelicula(nombrepelicula, precio, ejemplares);
+                Pelicula nuevapelicula = new Pelicula(nombrepelicula.toUpperCase(), precio, ejemplares);
                 elInventario.agregaPelicula(nuevapelicula);
-                System.out.println("Pelicula dado de alta exitosamente. \n");
+                System.out.println("el inventario: "); // BORRAME
+                elInventario.muestraInventario(); //BORRAME
+                System.out.println("Pelicula dada de alta exitosamente. \n");
             }
             return AGREGAPELICULA;
         case INFORMACION:  // Muestra informacion sobre alguna pelicula.
             System.out.println("Para ver la informacion de una pelicula "
-                               + "favor de ingresar el titulo desado: \n");
+                               + "favor de ingresar el titulo desado: ");
             nombrepelicula = entrada.readLine();  // Se declaro al principio para uso general.
             int laPeliculaExiste = elInventario.busquedaTitulo(nombrepelicula);
             if (laPeliculaExiste > -1) {  // Es -1 solo se recibe si no se encuentra en las listas.
@@ -110,17 +112,36 @@ public class MenuProg implements Serializable {
             return INFORMACION;
         case VENTA:  // Se vende una pelicula.
             System.out.println("Para realizar la venta se requieren "
-                               + "los siguientes datos: \n");
+                               + "los siguientes datos: ");
             System.out.print("Nombre del cliente: ");
             nombrecliente = entrada.readLine();
             System.out.print("Nombre de la pelicula: ");
             nombrepelicula = entrada.readLine();
 
+            int peliculaVenta = elInventario.busquedaTitulo(nombrepelicula);
+            if (peliculaVenta > -1) {
+                Pelicula lapelicula = elInventario.getPelicula(peliculaVenta);
+                if (lapelicula.getNumRestantes() > 0) {
+                    System.out.println("El ejemplar cuesta: " + lapelicula.getPrecio());
+                    lapelicula.vendeEjemplar();
+                } else {
+                    System.out.println("Lo sentimos ya no hay ejemplares disponibles"
+                                       + "lo agregaremos a una lista de espera."
+                                       + "Favor de proporcionar un telefono para"
+                                       + " avisarle que ya tenemos la pelicula.");
+                    int telefono = Integer.parseInt(entrada.readLine());
+                    Cliente unCliente = new Cliente(nombrecliente, telefono);
+                    lapelicula.guardaEnLista(unCliente);
+                    System.out.println("En cuanto resurtan nos comunicaremos con usted.");
+                }
+            } else {
+                System.out.println("El titulo no se encuentra en el sistema. \n");
+            }
 
             return VENTA;
         case PRECIO:  // Se actualiza el precio de una pelicula.
             System.out.println("Para cambiar el precio de una pelicula "
-                               + "proporcione los siguientes datos: \n");
+                               + "proporcione los siguientes datos: ");
             System.out.print("Nombre de la pelicula: ");
             nombrepelicula = entrada.readLine();
             System.out.print("Nuevo precio: ");
@@ -132,7 +153,7 @@ public class MenuProg implements Serializable {
                 System.out.println("El precio actual es: " + lapelicula.getPrecio());
                 System.out.println("Esta seguro que desea cambiar el precio de la pelicula: Y/N ");
                 String resp = entrada.readLine();
-                if (resp.contains("Yy")) {
+                if (resp.contains("Y") || resp.contains("y")) {
                     lapelicula.setPrecio(nuevoprecio);
                     System.out.println("El precio ha sido actualizado con exito.");
                 } else {

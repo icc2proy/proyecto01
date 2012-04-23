@@ -1,12 +1,13 @@
 package icc.proyecto01;
 
+import java.io.Serializable;
 import java.io.*;
 
 /**
  * Clase que simula el inventario que se tiene en la tienda
  * guardando cada pelicula en una lista.
  */
-public class Inventario implements java.io.Serializable {
+public class Inventario implements Serializable {
 
     private ListaLigadaDoble inventario; // Lista en donde vamos guardando las peliculas.
     private int contador = 1; // Nos sirve para ir agregando elementos al final de la lista.
@@ -80,8 +81,8 @@ public class Inventario implements java.io.Serializable {
     protected final int busquedaTitulo(final String titulopelicula) {
 
         int pos = -1;
-        if (inventario.size() != 0) {
-            for (int esta = 0; esta < inventario.size(); esta++) {
+        if (!inventario.isEmpty()) {
+            for (int esta = 1; esta < inventario.size(); esta++) {
                 Pelicula unaPelicula = (Pelicula) inventario.get(esta);
                 String nombre = unaPelicula.getTitulo();
                 if (titulopelicula.equalsIgnoreCase(nombre)) {

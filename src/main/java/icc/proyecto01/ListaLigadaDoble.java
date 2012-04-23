@@ -1,6 +1,6 @@
 package icc.proyecto01;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Nodos Auxiliares
@@ -15,108 +15,109 @@ import java.io.*;
  * cola tendría como nodo anterior a la cabeza.
  */
 
-public class ListaLigadaDoble implements java.io.Serializable, TDALista{
+public class ListaLigadaDoble implements Serializable, TDALista {
 
     private int numElems;
 
     private NodoDoble head, tail;
 
-    public ListaLigadaDoble(){
+    public ListaLigadaDoble() {
         create();
     }
-    
-    public void create(){
+
+    public void create() {
         numElems = 0;
-        head = new NodoDoble(null);	// creamos la cabeza
-        tail = new NodoDoble(null);	// creamos la cola
+        head = new NodoDoble(null);     // creamos la cabeza
+        tail = new NodoDoble(null);     // creamos la cola
         tail.cambiaAnterior(head); // ponemos head <- tail
         head.cambiaSiguiente(tail); // ponemos head -> tail
-    }
-    
-    public boolean isEmpty(){
-        return (numElems==0);
     }
 
-    public int size(){
+    public boolean isEmpty() {
+        return (numElems == 0);
+    }
+
+    public int size() {
         return numElems;
     }
-    
-     public void removeAll(){
+
+     public void removeAll() {
         numElems = 0;
         tail.cambiaAnterior(head); // ponemos head <- tail
         head.cambiaSiguiente(tail); // ponemos head -> tail
     }
-     
-     // Devuelve el primer nodo de esta lista     
-     private NodoDoble getFirst(){
+
+     // Devuelve el primer nodo de esta lista
+     private NodoDoble getFirst() {
          return head.daSiguiente();
      }
 
-     // Devuelve el ultimo nodo de la lista     
-     private NodoDoble getLast(){
+     // Devuelve el ultimo nodo de la lista
+     private NodoDoble getLast() {
          return tail.daAnterior();
      }
 
      // devuelve el nodo en la posicion i
      // 1 <= i <= size() y la lista no es vacia
-     private NodoDoble find(int i){
+     private NodoDoble find(final int i) {
          NodoDoble actual;
-         int n=size();
+         int n = size();
          int limite;
-         if(n%2==0)
-             limite=n/2;
-         else
-             limite=(n-1)/2;
-         if(i<=limite){ // i es de la primera mitad
-             actual=getFirst();
-             int skip=1;
-             while(skip<i){
-                 actual=actual.daSiguiente();
+         if (n % 2 == 0) {
+             limite = n / 2;
+         } else {
+             limite = (n - 1) / 2;
+         }
+
+         if (i <= limite) { // i es de la primera mitad
+             actual = getFirst();
+             int skip = 1;
+             while (skip < i) {
+                 actual = actual.daSiguiente();
                  skip++;
              }
-         }
-         else{ // i es de la segunda mitad
-             actual=getLast();
-             int skip=n;
-             while(skip>i){
-                 actual=actual.daAnterior();
+         } else { // i es de la segunda mitad
+             actual = getLast();
+             int skip = n;
+             while (skip > i) {
+                 actual = actual.daAnterior();
                  skip--;
              }
          }
          return actual;
      }
 
-     public Object get(int i) throws IndexOutOfBoundsException{
-         if(numElems==0)
+     public Object get(final int i) throws IndexOutOfBoundsException {
+         if (numElems == 0) {
              throw new IndexOutOfBoundsException("Indice invalido. Lista vacia");
-         if(i>=1 && i<=numElems){
-             NodoDoble actual=find(i);
-             return actual.daElemento();
          }
-         else{
+         if (i >= 1 && i <= numElems) {
+             NodoDoble actual = find(i);
+             return actual.daElemento();
+         } else {
              throw new IndexOutOfBoundsException("Indice invalido");
          }
      }
-     
-     public void add(int i,Object obj) throws IndexOutOfBoundsException{
-         if(i>=1 && i<=numElems+1){
-             NodoDoble nuevo=new NodoDoble(obj);
-             if(i==1){
+
+     public void add(final int i, final Object obj) throws IndexOutOfBoundsException {
+         if (i >= 1 && i <= numElems + 1) {
+             NodoDoble nuevo = new NodoDoble(obj);
+             if (i == 1) {
                 NodoDoble primero = getFirst(); // podria ser la cola
-                nuevo.cambiaAnterior(head); 
+                nuevo.cambiaAnterior(head);
                 nuevo.cambiaSiguiente(primero); // ya tenemos las referencias del nuevo
                 primero.cambiaAnterior(nuevo); // actualizamos la referencia anterior del primer nodo real
                 head.cambiaSiguiente(nuevo); // actualizamos la referencia siguiente
-            }
-            else if(i==numElems+1){
+
+             } else if (i == numElems + 1) {
                 NodoDoble ultimo = tail.daAnterior(); // podria ser la cabeza
                 nuevo.cambiaAnterior(ultimo);
                 nuevo.cambiaSiguiente(tail); // ya tenemos las referencias del nuevo
                 tail.cambiaAnterior(nuevo); // actualizamos la referencia anterior de tail
                 ultimo.cambiaSiguiente(nuevo); // actualizamos la referencia siguiente de u
-            }
-            else{ // 1 < i < numElems + 1
-		NodoDoble previo=find(i-1);
+
+             } else { // 1 < i < numElems + 1
+                NodoDoble previo = find(i - 1);
                 NodoDoble actual = previo.daSiguiente(); // ya tenemos el nodo de la posicion i
                 nuevo.cambiaAnterior(previo);
                 nuevo.cambiaSiguiente(actual); // ya tenemos las referencias del nuevo
@@ -124,22 +125,24 @@ public class ListaLigadaDoble implements java.io.Serializable, TDALista{
                 previo.cambiaSiguiente(nuevo); // actualizamos la referencia siguiente del (i-1)-esimo
             }
             numElems++;
-        }
-        else
-            throw new IndexOutOfBoundsException("Indice invalido");        
+         } else {
+            throw new IndexOutOfBoundsException("Indice invalido");
+         }
   }
 
-  public void remove(int i) throws IndexOutOfBoundsException{
-      if(numElems==0)
+  public void remove(final int i) throws IndexOutOfBoundsException {
+      if (numElems == 0) {
           throw new IndexOutOfBoundsException("Indice invalido. Lista vacia");
-      if(i>=1 && i<=numElems){
+      }
+      if (i >= 1 && i <= numElems) {
           NodoDoble actual;
-          if(i==1)
-              actual=getFirst();
-          else if(i==numElems)
-              actual=getLast();
-          else // 1 < i < numElems
-              actual=find(i);
+          if (i == 1) {
+              actual = getFirst();
+          } else if (i == numElems) {
+              actual = getLast();
+          } else { // 1 < i < numElems
+              actual = find(i);
+          }
           // independientemente de quien es actual, hacemos lo siguiente
           NodoDoble previo = actual.daAnterior();
           NodoDoble posterior = actual.daSiguiente();
@@ -149,9 +152,9 @@ public class ListaLigadaDoble implements java.io.Serializable, TDALista{
           actual.cambiaAnterior(null); // borramos las referencias internas de actual
           actual.cambiaSiguiente(null);
           numElems--;
-      }
-      else
+      } else {
           throw new IndexOutOfBoundsException("Indice invalido");
+      }
   }
-   
+
 }

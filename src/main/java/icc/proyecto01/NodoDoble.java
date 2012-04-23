@@ -1,47 +1,47 @@
 package icc.proyecto01;
 
-import java.io.*;
+import java.io.Serializable;
 
-public class NodoDoble implements java.io.Serializable{
+public class NodoDoble implements Serializable {
 
     private Object elemento;
 
     private NodoDoble anterior, siguiente;
 
-    public NodoDoble(Object obj){
-        elemento=obj;
-        anterior=siguiente=null;
+    public NodoDoble(final Object obj) {
+        elemento = obj;
+        anterior = null;
+        siguiente = null;
     }
 
-    public NodoDoble(NodoDoble ant, Object obj, NodoDoble sig){
-        elemento=obj;
-        anterior=ant;
-        siguiente=sig;
+    public NodoDoble(final NodoDoble ant, final Object obj,
+                     final NodoDoble sig) {
+        elemento = obj;
+        anterior = ant;
+        siguiente = sig;
     }
 
-    public Object daElemento(){
+    public final Object daElemento() {
         return elemento;
     }
 
-    public NodoDoble daAnterior(){
+    public final NodoDoble daAnterior() {
         return anterior;
     }
 
-    public NodoDoble daSiguiente(){
+    public final NodoDoble daSiguiente() {
         return siguiente;
     }
 
-    public void cambiaElemento(Object obj){
-        elemento=obj;
+    public final void cambiaElemento(final Object obj) {
+        elemento = obj;
     }
 
-    public void cambiaAnterior(NodoDoble ant){
-        anterior=ant;
+    public final void cambiaAnterior(final NodoDoble ant) {
+        anterior = ant;
     }
 
-    public void cambiaSiguiente(NodoDoble sig){
-        siguiente=sig;
+    public final  void cambiaSiguiente(final NodoDoble sig) {
+        siguiente = sig;
     }
-
-
 }

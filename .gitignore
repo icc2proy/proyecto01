@@ -15,3 +15,4 @@ target
 site
 unstage
 test
+.#*

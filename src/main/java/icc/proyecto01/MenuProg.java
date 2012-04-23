@@ -3,8 +3,6 @@ package icc.proyecto01;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-//import goldman.collection.positional.DoublyLinkedList;
-
 /**
  * Clase <code>MenuProg</code> nos muestra un menu
  * para operar en el programa.
@@ -31,6 +29,8 @@ public class MenuProg {
     private ListaLigadaDoble listaclientes = new ListaLigadaDoble();
     private ListaLigadaDoble listapeliculas = new ListaLigadaDoble();
 
+    private Inventario elInventario = new Inventario();
+
      /**
      * El metodo <code>muestraMenu</code> nos despliega un menú de opciones
      * que podemos usar en el programa.
@@ -40,7 +40,7 @@ public class MenuProg {
      * diferente de -1.
      * @exception IOException if an error occurs
      */
-    public final int muestraMenu(final BufferedReader entrada, final Catalogo elCatalogo)
+    public final int muestraMenu(final BufferedReader entrada)
         throws IOException {
 
         String nombrecliente = "";  // Variable general para el nombre de un cliente.
@@ -71,22 +71,21 @@ public class MenuProg {
             System.out.println("Para dar de alta una nueva pelicula "
                                + "favor de ingresar nombre: \n");
             nombrepelicula = entrada.readLine();  // Se declaro al principio para uso general.
-            Pelicula nuevapelicula = new Pelicula(nombrepelicula);
-            int elTituloExiste = elCatalogo.busquedaTitulo(nombrepelicula);
+
+            int elTituloExiste = elInventario.busquedaTitulo(nombrepelicula);
             if (elTituloExiste > -1) {  // El -1 solo se recibe si no se encuentra en las listas.
                 System.out.println("El titulo ya existe. \n");
             } else {
-                // Agregamos el precio de la pelicula.
+                // Solicitamos el precio de la pelicula.
                 System.out.println("Favor de agregar el precio por ejemplar: ");
                 int precio = Integer.parseInt(entrada.readLine());
-                nuevapelicula.setPrecio(precio);
 
-                // Agregamos el numero de ejemplares.
+                // Solicitamos el numero de ejemplares.
                 System.out.println("Favor de agregar el numero de ejemplares en existencia: ");
                 int ejemplares = Integer.parseInt(entrada.readLine());
-                nuevapelicula.setNumEjemplares(ejemplares);
 
-                // Se agrega en la lista
+		// Creamos la pelicula y la agregamos al inventario.
+		Pelicula nuevapelicula = new Pelicula(nombrepelicula, precio, ejemplares);
                 listapeliculas.add(listapeliculas.size(), nuevapelicula);
                 System.out.println("Pelicula dado de alta exitosamente. \n");
             }
@@ -95,7 +94,7 @@ public class MenuProg {
             System.out.println("Para ver la informacion de una pelicula "
                                + "favor de ingresar el titulo desado: \n");
             nombrepelicula = entrada.readLine();  // Se declaro al principio para uso general.
-            int laPeliculaExiste = elCatalogo.busquedaTitulo(nombrepelicula);
+            int laPeliculaExiste = elInventario.busquedaTitulo(nombrepelicula);
             if (laPeliculaExiste > -1) {  // Es -1 solo se recibe si no se encuentra en las listas.
                 Pelicula consulta = (Pelicula) listapeliculas.get(laPeliculaExiste);
                 System.out.println("Titulo: " + consulta.getTitulo());
@@ -123,7 +122,7 @@ public class MenuProg {
             System.out.print("Nuevo precio: ");
             int nuevoprecio = Integer.parseInt(entrada.readLine());
 
-            int unapelicula = elCatalogo.busquedaTitulo(nombrepelicula);
+            int unapelicula = elInventario.busquedaTitulo(nombrepelicula);
             if (unapelicula > -1) {
                 Pelicula lapelicula = (Pelicula) listapeliculas.get(unapelicula);
                 System.out.println("El precio actual es: " + lapelicula.getPrecio());

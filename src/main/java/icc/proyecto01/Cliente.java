@@ -1,3 +1,4 @@
+package icc.proyecto01;
 
 /**
  *Clase que modela un Cliente, que contien nombre y telefono.

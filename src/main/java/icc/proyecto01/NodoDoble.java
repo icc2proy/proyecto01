@@ -1,3 +1,5 @@
+package icc.proyecto01;
+
 import java.io.*;
 
 public class NodoDoble implements java.io.Serializable{

@@ -24,24 +24,12 @@ public class App {
         int opcion = 0;
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
-        //        Catalogo elCatalogo = new Catalogo();
-        //        MenuProg elMenu = new MenuProg();
-
-        // Elementos de prueba.
-        Pelicula peli = new Pelicula();
-        Pelicula p = new Pelicula();
-
-        peli.guardaInventario(p, "Armagedon", 300, 25);
-        peli.muestraInventario(p);
-
-        peli.guardaInventario(p, "Toy Story", 150, 18);
-        peli.muestraInventario(p);
-        // Terminan elementos de prueba.
+        MenuProg elMenu = new MenuProg();
 
         // Comentar esto para bloquear el menu.
         while (opcion != -1) {
             try {
-                opcion = elMenu.muestraMenu(entrada, elCatalogo);
+                opcion = elMenu.muestraMenu(entrada);
             } catch (IOException e) {
                 System.out.println("Opción mal elegida, volver a intentarlo");
                 opcion = 0;

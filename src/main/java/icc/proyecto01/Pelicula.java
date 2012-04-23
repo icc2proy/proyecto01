@@ -1,3 +1,5 @@
+package icc.proyecto01;
+
 import java.io.*;
 
 /**
@@ -6,12 +8,12 @@ import java.io.*;
  */
 public class Pelicula implements java.io.Serializable{
 
-    String titulo; //el titulo de la pelicula.
-    int precio; // el precio de la pelicula.
-    int num_ejemplares; // el numero de ejemplares que hay en un principio.
-    int num_restantes; //el numero de ejemplares que hay despues de algunas ventas.
-    int count = 0; // contador 
-    int lista_counter = 1; //contador de la lista
+    private String titulo; //el titulo de la pelicula.
+    private int precio; // el precio de la pelicula.
+    private int num_ejemplares; // el numero de ejemplares que hay en un principio.
+    private int num_restantes; //el numero de ejemplares que hay despues de algunas ventas.
+    private int count = 0; // contador 
+    private int lista_counter = 1; //contador de la lista
 
     Inventario inv = new Inventario();
     ListaLigadaDoble lista_de_espera = new ListaLigadaDoble(); //lista de espera

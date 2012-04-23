@@ -1,3 +1,4 @@
+package icc.proyecto01;
 
 interface TDALista {
 

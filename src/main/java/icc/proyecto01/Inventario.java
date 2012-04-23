@@ -1,3 +1,5 @@
+package icc.proyecto01;
+
 import java.io.*;
 
 /**
@@ -54,4 +56,31 @@ public class Inventario implements java.io.Serializable {
             System.out.println("precio: " + tmp.getPrecio() );
         }
     }
+
+
+    /**
+     * Este metodo realiza la busqueda de una pelicula
+     * por el titulo de esta.
+     *
+     * @param titulopelicula String con el nombre de la pelicula
+     * a buscar.
+     * @return int con la posicion en la que se encuentra la 
+     * pelicula.
+     */
+    protected final int busquedaTitulo(final String titulopelicula) {
+
+        int pos = -1;
+        if (inventario.size() != 0) {
+            for (int esta = 0; esta < inventario.size(); esta++) {
+		Pelicula unaPelicula = (Pelicula) inventario.get(esta);
+                String nombre = unaPelicula.getTitulo();
+                if (titulopelicula.equalsIgnoreCase(nombre)) {
+                    pos = esta;
+                }
+            }
+        }
+        return pos;
+    }
+
+
 }

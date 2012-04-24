@@ -3,7 +3,9 @@ package icc.proyecto01;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.Serializable;
 
 /**
@@ -103,6 +105,7 @@ public class MenuProg implements Serializable {
                 System.out.println("Titulo: " + consulta.getTitulo());
                 System.out.println("Precio: " + consulta.getPrecio());
                 System.out.println("Existencia: " + consulta.getNumRestantes());
+                System.out.println("En espera: " + consulta.enEspera() );
             } else {
                 System.out.println("No hay informacion disponible actualmente. "
                                    + "El titulo no se encuentra en el sistema. \n");
@@ -127,6 +130,7 @@ public class MenuProg implements Serializable {
                                        + "lo agregaremos a una lista de espera."
                                        + "Favor de proporcionar un telefono para"
                                        + " avisarle que ya tenemos la pelicula.");
+
                     int telefono = Integer.parseInt(entrada.readLine());
                     Cliente unCliente = new Cliente(nombrecliente, telefono);
                     lapelicula.guardaEnLista(unCliente);
@@ -179,10 +183,42 @@ public class MenuProg implements Serializable {
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(obje);
             out.close();
-            fileOut.close();
+ 
+           fileOut.close();
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
+    public void actualizaInventario(String files) {
+
+        Inventario invTmp = new Inventario();
+        Pelicula tmpPelicula;
+
+        try{
+
+            FileInputStream fileIn = new FileInputStream(files);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            invTmp = (Inventario) in.readObject();
+            elInventario = invTmp;
+
+            if (!(elInventario.getLista().isEmpty()) ){
+
+                for (int i = 1; i <= elInventario.getLista().size(); i++) {
+                    tmpPelicula = elInventario.getPelicula(i);
+                    tmpPelicula.resetEjemplares();
+                    tmpPelicula.vaciaEspera();
+                }
+            }
+                    
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return ;
+        } catch (ClassNotFoundException c) {
+            c.printStackTrace();
+            return ;
+        }
+    }
 }

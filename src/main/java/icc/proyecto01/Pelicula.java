@@ -18,6 +18,7 @@ public class Pelicula implements Serializable {
     //Inventario inv = new Inventario();
     private ListaLigadaDoble lista_de_espera = new ListaLigadaDoble(); //lista de espera
 
+
     /**
      * Constructor de la clase.
      * @param mtitulo el titulo de la pelicula.
@@ -36,6 +37,10 @@ public class Pelicula implements Serializable {
      * Constructor vacio de la clase.
      */
     public Pelicula() {
+    }
+
+    public int enEspera(){
+        return lista_de_espera.size();
     }
 
     /**
@@ -105,6 +110,9 @@ public class Pelicula implements Serializable {
      * Metodo que guarda a los clientes en espera de la pelicula.
      */
     public void guardaEnLista(final Cliente c) {
+        System.out.println("lista_counter: " + lista_counter);
+        System.out.println("size lista: " + lista_de_espera.size() );
+
         lista_de_espera.add(lista_counter, c);
         lista_counter++;
     }
@@ -114,12 +122,42 @@ public class Pelicula implements Serializable {
      * @return tmp, el objecto Cliente de la lista.
      */
     public Object sacaElementoLista() {
+
         if (lista_de_espera.size() > 0) {
             Object tmp = lista_de_espera.get(1);
             return tmp;
         } else {
             return null;
         }
+    }
+
+    /**
+     *Metodo que elimina el primer elementon de la lista de espera.
+     */
+    public void eliminaCliente() {
+
+        if ( !lista_de_espera.isEmpty() ) {
+            lista_de_espera.remove(1);
+            lista_counter --;
+        }
+    }
+
+    /**
+     *Metodo que saca un cliente en espera.
+     */
+    public void vaciaEspera(){
+
+        while ( !lista_de_espera.isEmpty() && num_restantes > 0) {
+            eliminaCliente();
+            vendeEjemplar();
+        }
+    }
+
+    /**
+     *Metodo que reestablece el numero de ejemplares.
+     */
+    public void resetEjemplares(){
+        num_restantes = num_ejemplares;
     }
 
 }

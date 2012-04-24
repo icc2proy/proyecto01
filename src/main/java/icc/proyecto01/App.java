@@ -3,6 +3,7 @@ package icc.proyecto01;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.File;
 
 /**
  * Aplicacion para el manejo de la venta
@@ -25,6 +26,11 @@ public class App {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
         MenuProg elMenu = new MenuProg();
+        File file = new File("inventario.ser");
+
+        if ( file.exists() ) {
+        elMenu.actualizaInventario("inventario.ser");
+        }
 
         // Comentar esto para bloquear el menu.
         while (opcion != -1) {

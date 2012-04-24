@@ -57,7 +57,7 @@ public class Inventario implements Serializable {
     }
 
     /**
-     * Metod que nos muestra las peliculas que hay en la lista.
+     * Metodo que nos muestra las peliculas que hay en la lista.
      */
     public void muestraInventario() {
         Pelicula tmp = new Pelicula();
@@ -117,5 +117,4 @@ public class Inventario implements Serializable {
         }
         return inv;
     }
-
 }

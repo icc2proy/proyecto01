@@ -2,6 +2,15 @@ package icc.proyecto01;
 
 import java.io.Serializable;
 
+/**
+ * Describe un elemento <code>NodoDoble</code> usado por
+ * una lista doblemente ligada. En particular este nodo
+ * tiene dos referencias una apuntando al elemento anterior
+ * a el y otra apuntando al elemento que le sigue. Puede
+ * guardar cualquier tipo de objeto.
+ *
+ * @version 1.0
+ */
 public class NodoDoble implements Serializable {
 
     private Object elemento;

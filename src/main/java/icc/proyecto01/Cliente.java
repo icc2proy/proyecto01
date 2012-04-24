@@ -23,7 +23,7 @@ public class Cliente implements Serializable {
      * Metodo que pone el nombre del cliente.
      * @param name el nombre del cliente.
      */
-    public void setNombre(final String name) {
+    public final void setNombre(final String name) {
         nombre = name;
     }
 
@@ -31,7 +31,7 @@ public class Cliente implements Serializable {
      * Metodo que regresa el nombre del cliente.
      * @return nombre el nombre del cliente.
      */
-    public String getNombre() {
+    public final String getNombre() {
         return nombre;
     }
 
@@ -39,7 +39,7 @@ public class Cliente implements Serializable {
      * Metodo que pone el telefono del cliente.
      * @param tel el telefono del cliente.
      */
-    public void setTelefono(final int tel) {
+    public final void setTelefono(final int tel) {
         telefono = tel;
     }
 
@@ -47,7 +47,7 @@ public class Cliente implements Serializable {
      * Metodo que regresa el telefono del cliente.
      * @return telefono, el telefono del cliente.
      */
-    public int getTelefono() {
+    public final int getTelefono() {
         return telefono;
     }
 
@@ -55,7 +55,7 @@ public class Cliente implements Serializable {
      * Metodo que pone el estado del cliente, ya sea si esta en espera o no.
      * @param state el estado del cliente del cliente.
      */
-    public void setEstado(final boolean state) {
+    public final void setEstado(final boolean state) {
         esperando = state;
     }
 
@@ -63,7 +63,7 @@ public class Cliente implements Serializable {
      * Metodo que devuelve el estado de un cliente.
      * @return esperando, si esta en espera o no.
      */
-    public boolean getEstado() {
+    public final boolean getEstado() {
         return esperando;
     }
 }

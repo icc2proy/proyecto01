@@ -8,15 +8,40 @@ import java.io.Serializable;
  */
 public class Pelicula implements Serializable {
 
-    private String titulo; //el titulo de la pelicula.
-    private int precio; // el precio de la pelicula.
-    private int num_ejemplares; // el numero de ejemplares que hay en un principio.
-    private int num_restantes; //el numero de ejemplares que hay despues de algunas ventas.
-    private int count = 0; // contador
-    private int lista_counter = 1; //contador de la lista
+    /**
+     * El <code>titulo</code> de la pelicula.
+     */
+    private String titulo;
 
-    //Inventario inv = new Inventario();
-    private ListaLigadaDoble lista_de_espera = new ListaLigadaDoble(); //lista de espera
+    /**
+     * El <code>precio</code> de la pelicula.
+     */
+    private int precio;
+
+    /**
+     * El numero de <code>numejemplares</code>
+     * que hay en un principio.
+     */
+    private int numejemplares;
+
+    /**
+     * El numero de <code>numrestantes</code>
+     * ejemplares que quedan en stock.
+     */
+    private int numrestantes;
+
+    /**
+     * Contador de elementos <code>listacount</code>
+     * en la lista.
+     */
+    private int listacount = 1;
+
+    /**
+     * Es una lista<code>listaEspera</code> con los
+     * nombres de las personas que estan esperando una
+     * pelicula. Funciona como una cola realmente.
+     */
+    private ListaLigadaDoble listaEspera = new ListaLigadaDoble();
 
 
     /**
@@ -29,18 +54,26 @@ public class Pelicula implements Serializable {
                     final int mejemplares) {
         titulo = mtitulo;
         precio = mprecio;
-        num_ejemplares = mejemplares;
-        num_restantes = mejemplares;
+        numejemplares = mejemplares;
+        numrestantes = mejemplares;
     }
 
     /**
-     * Constructor vacio de la clase.
+     * Constructor de la clase <code>Pelicula</code>
+     * sin parametros.
      */
     public Pelicula() {
     }
 
-    public int enEspera(){
-        return lista_de_espera.size();
+    /**
+     * El metodo <code>enEspera</code> devuelve el numero
+     * de personas que se encuentran en la lista de espera.
+     *
+     * @return an <code>int</code> el numero de personas que
+     * estan esperando una pelicula.
+     */
+    public int enEspera() {
+        return listaEspera.size();
     }
 
     /**
@@ -53,10 +86,10 @@ public class Pelicula implements Serializable {
 
     /**
      * Metodo que ponen el titulo de la pelicula.
-     * @param s el titulo de la pelicula.
+     * @param nombre el titulo de la pelicula.
      */
-    public void setTitulo(final String s) {
-        titulo = s;
+    public void setTitulo(final String nombre) {
+        titulo = nombre;
     }
 
     /**
@@ -69,18 +102,18 @@ public class Pelicula implements Serializable {
 
     /**
      * Metodo que ponen el precio de la pelicula.
-     * @param p el precio de la pelicula.
+     * @param prec el precio de la pelicula.
      */
-    public void setPrecio(final int p) {
-        precio = p;
+    public void setPrecio(final int prec) {
+        precio = prec;
     }
 
     /**
      * Metodo que devuelve el numero de ejemplares totales.
-     * @return num_ejemplares el numero de ejemplares.
+     * @return numejemplares el numero de ejemplares.
      */
     public int getNumEjemplares() {
-        return num_ejemplares;
+        return numejemplares;
     }
 
     /**
@@ -88,33 +121,32 @@ public class Pelicula implements Serializable {
      * @param num el numero de ejemplares.
      */
     public void setNumEjemplares(final int num) {
-        num_ejemplares = num;
+        numejemplares = num;
     }
 
     /**
      * Metodo que vende un ejemplar.
      */
     public void vendeEjemplar() {
-        num_restantes--;
+        numrestantes--;
     }
 
     /**
      * Metodo que devuelve el numero de ejemplares restantes o en existencia.
-     * @return num_restantes el numero de ejemplares restantes.
+     * @return numrestantes el numero de ejemplares restantes.
      */
     public int getNumRestantes() {
-        return num_restantes;
+        return numrestantes;
     }
 
     /**
      * Metodo que guarda a los clientes en espera de la pelicula.
+     * @param cli un <code>Cliente</code> que va comprar una pelicula
+     * es una persona con nombre y telefono.
      */
-    public void guardaEnLista(final Cliente c) {
-        System.out.println("lista_counter: " + lista_counter);
-        System.out.println("size lista: " + lista_de_espera.size() );
-
-        lista_de_espera.add(lista_counter, c);
-        lista_counter++;
+    public void guardaEnLista(final Cliente cli) {
+        listaEspera.add(listacount, cli);
+        listacount++;
     }
 
     /**
@@ -123,8 +155,8 @@ public class Pelicula implements Serializable {
      */
     public Object sacaElementoLista() {
 
-        if (lista_de_espera.size() > 0) {
-            Object tmp = lista_de_espera.get(1);
+        if (listaEspera.size() > 0) {
+            Object tmp = listaEspera.get(1);
             return tmp;
         } else {
             return null;
@@ -132,32 +164,32 @@ public class Pelicula implements Serializable {
     }
 
     /**
-     *Metodo que elimina el primer elementon de la lista de espera.
+     * Metodo que elimina el primer elementon de la lista de espera.
      */
     public void eliminaCliente() {
 
-        if ( !lista_de_espera.isEmpty() ) {
-            lista_de_espera.remove(1);
-            lista_counter --;
+        if (!listaEspera.isEmpty()) {
+            listaEspera.remove(1);
+            listacount--;
         }
     }
 
     /**
-     *Metodo que saca un cliente en espera.
+     * Metodo que saca un cliente en espera.
      */
-    public void vaciaEspera(){
+    public void vaciaEspera() {
 
-        while ( !lista_de_espera.isEmpty() && num_restantes > 0) {
+        while (!listaEspera.isEmpty() && numrestantes > 0) {
             eliminaCliente();
             vendeEjemplar();
         }
     }
 
     /**
-     *Metodo que reestablece el numero de ejemplares.
+     * Metodo que reestablece el numero de ejemplares.
      */
-    public void resetEjemplares(){
-        num_restantes = num_ejemplares;
+    public void resetEjemplares() {
+        numrestantes = numejemplares;
     }
 
 }

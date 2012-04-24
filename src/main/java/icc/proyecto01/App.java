@@ -28,8 +28,8 @@ public class App {
         MenuProg elMenu = new MenuProg();
         File file = new File("inventario.ser");
 
-        if ( file.exists() ) {
-        elMenu.actualizaInventario("inventario.ser");
+        if (file.exists()) {
+            elMenu.actualizaInventario("inventario.ser");
         }
 
         // Comentar esto para bloquear el menu.

@@ -58,10 +58,14 @@ public class MenuProg implements Serializable {
             + "----------------------";
         System.out.println(menu);
         String sopcion = "";
+        System.out.println("Tenemos " + elInventario.getLista().size()
+                           + " titulos dados de alta.");
+
         System.out.print("Elige una letra para realizar "
                            + "la operación -> ");
         try {
             sopcion = entrada.readLine();  // Se recibe la entrada del teclado y se almacena en sopción.
+            sopcion = sopcion.toUpperCase();
         } catch (IOException e) {
             System.err.println("Opción incorrecta, vuelve a intentar.");
         }
@@ -105,7 +109,7 @@ public class MenuProg implements Serializable {
                 System.out.println("Titulo: " + consulta.getTitulo());
                 System.out.println("Precio: " + consulta.getPrecio());
                 System.out.println("Existencia: " + consulta.getNumRestantes());
-                System.out.println("En espera: " + consulta.enEspera() );
+                System.out.println("En espera: " + consulta.enEspera());
             } else {
                 System.out.println("No hay informacion disponible actualmente. "
                                    + "El titulo no se encuentra en el sistema. \n");
@@ -183,26 +187,33 @@ public class MenuProg implements Serializable {
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(obje);
             out.close();
- 
+
            fileOut.close();
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
 
-    public void actualizaInventario(String files) {
+    /**
+     * El metodo <code>actualizaInventario</code> se encarga de
+     * recargar un archivo con terminacion .ser si es que este
+     * existe.
+     *
+     * @param files a <code>String</code> con el nombre del archivo
+     * a cargar.
+     */
+    public final void actualizaInventario(final String files) {
 
         Inventario invTmp = new Inventario();
         Pelicula tmpPelicula;
 
-        try{
-
+        try {
             FileInputStream fileIn = new FileInputStream(files);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             invTmp = (Inventario) in.readObject();
             elInventario = invTmp;
 
-            if (!(elInventario.getLista().isEmpty()) ){
+            if (!elInventario.getLista().isEmpty()) {
 
                 for (int i = 1; i <= elInventario.getLista().size(); i++) {
                     tmpPelicula = elInventario.getPelicula(i);
@@ -210,15 +221,15 @@ public class MenuProg implements Serializable {
                     tmpPelicula.vaciaEspera();
                 }
             }
-                    
+
             in.close();
             fileIn.close();
         } catch (IOException i) {
             i.printStackTrace();
-            return ;
+            return;
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
-            return ;
+            return;
         }
     }
 }

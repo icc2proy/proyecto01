@@ -1,7 +1,6 @@
 package icc.proyecto01;
 
 import java.io.Serializable;
-import java.io.*;
 
 /**
  * Clase que simula el inventario que se tiene en la tienda
@@ -9,8 +8,18 @@ import java.io.*;
  */
 public class Inventario implements Serializable {
 
-    private ListaLigadaDoble inventario; // Lista en donde vamos guardando las peliculas.
-    private int contador = 1; // Nos sirve para ir agregando elementos al final de la lista.
+    /**
+     * La lista <code>inventario</code> es donde vamos
+     * guardando todas las peliculas que agregamos.
+     */
+    private ListaLigadaDoble inventario;
+
+    /**
+     * El <code>contador</code> lleva la cuenta de
+     * cuantas peliculas hay en la lista y nos ayuda
+     * a saber cual es la ultima posicion de la lista.
+     */
+    private int contador = 1;
 
     /**
      * Constructor de la clase que inicializa la lista ligada.
@@ -23,17 +32,19 @@ public class Inventario implements Serializable {
      * Medodo que agrega peliculas a la lista e incrementa
      * el contador en uno para ir agregando al final de la
      * lista y simular una cola.
+     * @param peli objeto tipo pelicula que se agregara al
+     * inventario.
      */
-    public void agregaPelicula(final Pelicula p) {
-        inventario.add(contador, p);
+    protected final  void agregaPelicula(final Pelicula peli) {
+        inventario.add(contador, peli);
         contador++;
     }
 
     /**
      * Metodo que devuelve la lista en donde estan las peliculas.
-     * @return inventario la lista de peliculas.
+     * @return inventario una lista ligada doble con las peliculas.
      */
-    public ListaLigadaDoble getLista() {
+    public final ListaLigadaDoble getLista() {
         return inventario;
     }
 
@@ -44,7 +55,7 @@ public class Inventario implements Serializable {
      * @param indice int que es la posicion de la pelicula dentro
      * de la lista.
      */
-    protected final Pelicula getPelicula(final int indice) {
+    public final Pelicula getPelicula(final int indice) {
         return (Pelicula) inventario.get(indice);
     }
 
@@ -52,14 +63,14 @@ public class Inventario implements Serializable {
      * Metodo auxiliar que saca el primer elemento de la lista.
      * @return Pelicula la pelicual al inicio de la lista.
      */
-    public Pelicula getFirstPelicula() {
+    public final  Pelicula getFirstPelicula() {
         return  (Pelicula) inventario.get(1);
     }
 
     /**
      * Metodo que nos muestra las peliculas que hay en la lista.
      */
-    public void muestraInventario() {
+    protected final void muestraInventario() {
         Pelicula tmp = new Pelicula();
 
         for (int i = 1; i <= inventario.size(); i++) {
@@ -93,28 +104,4 @@ public class Inventario implements Serializable {
         return pos;
     }
 
-    /**
-     * Metodo que devuelve el inventario guardado.
-     * @return inv, el inventario de la tienda.
-     */
-    public Inventario dameInventario() {
-
-        Inventario inv = null;
-
-        try {
-            FileInputStream fileIn = new FileInputStream("inventario.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            inv = (Inventario) in.readObject();
-
-            in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-            return null;
-        }
-        return inv;
-    }
 }
